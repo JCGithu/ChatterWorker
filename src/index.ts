@@ -1,14 +1,6 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `wrangler dev src/index.ts` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `wrangler deploy src/index.ts --name my-worker` to deploy your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+// `wrangler dev src/index.ts`
 
-import { Router, error } from 'itty-router';
+import { Router, error, createCors } from 'itty-router';
 import { ApiClient } from '@twurple/api';
 import { AppTokenAuthProvider } from '@twurple/auth';
 
@@ -18,7 +10,10 @@ export interface Env {
 }
 type upload = Record<string, Record<string, string>>
 
+const { preflight, corsify } = createCors();
 const router = Router();
+
+router.all('*', preflight);
 
 function route(request: Request, env: Env) {
 	router.get('/c/:id', async (data) => {

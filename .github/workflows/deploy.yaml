@@ -9,6 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
+    environment: Cloudflare
     steps:
       - uses: actions/checkout@v4
       - name: Deploy

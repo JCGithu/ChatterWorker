@@ -1,0 +1,22 @@
+{
+  "name": "test-worker",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3",
+    "wrangler": "3.22.3"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@twurple/api": "^7.0.8",
+    "@twurple/auth": "^7.0.8",
+    "itty-router": "^4.0.26",
+    "neverthrow": "^6.1.0"
+  }
+}

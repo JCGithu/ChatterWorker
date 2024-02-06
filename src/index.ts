@@ -36,10 +36,9 @@ function route(request: Request, env: Env) {
 			}
 		};
 		badgeData.forEach(b => {
+			upload[b.id] = {};
 			b.versions.forEach(v => {
-				upload[b.id] = {
-					[v.id]: v.getImageUrl(4)
-				}
+				upload[b.id][v.id] = v.getImageUrl(4);
 			});
 		});
 		return upload;

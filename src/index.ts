@@ -11,7 +11,7 @@ export interface Env {
 type upload = Record<string, Record<string, string>>
 
 const { preflight, corsify } = createCors({
-	origins: ['https://localhost:5173', 'https://colloquial.studio', 'https://hootbeta.netlify.app', 'https://beta--hootbeta.netlify.app'],
+	origins: ['https://localhost:5173', 'http://localhost:5173', 'https://colloquial.studio', 'https://hootbeta.netlify.app', 'https://beta--hootbeta.netlify.app'],
 });
 const router = Router();
 

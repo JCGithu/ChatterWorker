@@ -1,6 +1,6 @@
 // `wrangler dev src/index.ts`
 
-import { Router, error, createCors } from 'itty-router';
+import { Router, error, createCors, json } from 'itty-router';
 import { ApiClient } from '@twurple/api';
 import { AppTokenAuthProvider } from '@twurple/auth';
 
@@ -10,7 +10,9 @@ export interface Env {
 }
 type upload = Record<string, Record<string, string>>
 
-const { preflight, corsify } = createCors();
+const { preflight, corsify } = createCors({
+	origins: ['localhost:5173', 'colloquial.studio', 'hootbeta.netlify.app', 'beta--hootbeta.netlify.app'],
+});
 const router = Router();
 
 router.all('*', preflight);
@@ -38,14 +40,14 @@ function route(request: Request, env: Env) {
 		});
 		return upload;
 	})
-	return router.handle(request, env);
+	return router.handle(request, env).then(json).catch(error).then(corsify);
 }
 
 const handler = {
 	async fetch(request: Request, env: Env) {
 		try {
 			const result = await route(request, env);
-			console.log(result)
+			return result
 			return new Response(JSON.stringify(result), { status: 200 });
 		} catch (error) {
 			console.error(error);

@@ -30,9 +30,12 @@ function route(request: Request, env: Env) {
 		if (!userID) return error(404);
 		const badgeData = await apiClient.chat.getChannelBadges(userID.id);
 		if (!badgeData) return error(404);
-		let upload: upload = {};
+		let upload: upload = {
+			userID: {
+				id: userID.id
+			}
+		};
 		badgeData.forEach(b => {
-			upload[b.id] = {};
 			b.versions.forEach(v => {
 				upload[b.id][v.id] = v.getImageUrl(4)
 			});

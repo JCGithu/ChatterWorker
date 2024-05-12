@@ -37,7 +37,7 @@ function route(request: Request, env: Env) {
 		badgeData.forEach(b => {
 			if (!upload[b.id]) upload[b.id] = {};
 			b.versions.forEach(v => {
-				upload[b.id][v.id] = v.getImageUrl(4);
+				if (!upload[b.id][v.id]) upload[b.id][v.id] = v.getImageUrl(4);
 			});
 		});
 		return upload;

@@ -25,8 +25,10 @@ function route(request: Request, env: Env) {
 		const apiClient = new ApiClient({ authProvider });
 		const userID = await apiClient.users.getUserByName(id);
 		if (!userID) return error(404);
-		const badgeData = await apiClient.chat.getChannelBadges(userID.id);
+		let badgeData = await apiClient.chat.getChannelBadges(userID.id);
 		if (!badgeData) return error(404);
+		let moreBadges = await apiClient.chat.getGlobalBadges();
+		badgeData = badgeData.concat(moreBadges);
 		let upload: upload = {
 			userID: {
 				id: userID.id

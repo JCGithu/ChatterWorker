@@ -26,16 +26,16 @@ function route(request: Request, env: Env) {
 		const userID = await apiClient.users.getUserByName(id);
 		if (!userID) return error(404);
 		let badgeData = await apiClient.chat.getChannelBadges(userID.id);
+		let globalBadges = await apiClient.chat.getGlobalBadges();
 		if (!badgeData) return error(404);
-		let moreBadges = await apiClient.chat.getGlobalBadges();
-		badgeData = badgeData.concat(moreBadges);
+		badgeData = badgeData.concat(globalBadges);
 		let upload: upload = {
 			userID: {
 				id: userID.id
 			}
 		};
 		badgeData.forEach(b => {
-			upload[b.id] = {};
+			if (!upload[b.id]) upload[b.id] = {};
 			b.versions.forEach(v => {
 				upload[b.id][v.id] = v.getImageUrl(4);
 			});
